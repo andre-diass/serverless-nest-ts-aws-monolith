@@ -6,7 +6,7 @@ import custom from './custom';
 import resources from './resources';
 import * as functionsBase from './functions';
 
-const SERVICE_NAME = 'serverless-test';
+const SERVICE_NAME = 'serverless-monolith';
 const SERVICE_DESCRIPTION = 'a service';
 
 const functions = Object.fromEntries(
