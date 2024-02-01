@@ -1,0 +1,8 @@
+*.yaml
+*.eslintrc*
+*.js
+*lock*
+
+serverless
+serverless.ts
+

@@ -1,0 +1,47 @@
+name: Deploy to AWS Serverless Framework Project
+
+on:
+  push:
+    branches:
+      - development
+      - main
+
+jobs:
+  deploy:
+    name: Deploy
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ secrets.AWS_REGION }}
+
+      # - name: Inject NPM_TOKEN to .npmrc
+      #   run: |
+      #     echo "//npm.pkg.github.com/:_authToken=${{ secrets.NPM_TOKEN }}" >> ./.npmrc
+
+      - name: Install Depedencies
+        id: install-deps
+        run: yarn
+
+      - name: Set STAGE variable to dev or prd
+        run: |
+          if [ ${{ github.ref }} = 'refs/heads/development' ]
+          then
+            echo "STAGE=dev" >> $GITHUB_ENV
+          elif [ ${{ github.ref }} = 'refs/heads/main' ]
+          then
+            echo "STAGE=prd" >> $GITHUB_ENV
+          fi
+
+      - name: Deploy Serverless App to AWS
+        id: deploy-serverless-to-aws
+        run: |
+          echo "Deploying to STAGE=$STAGE"
+          yarn sls deploy --verbose --stage ${{ env.STAGE }}
