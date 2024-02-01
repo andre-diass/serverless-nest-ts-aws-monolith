@@ -28,7 +28,7 @@ jobs:
 
       - name: Install Depedencies
         id: install-deps
-        run: yarn
+        run: npm install
 
       - name: Set STAGE variable to dev or prd
         run: |
@@ -44,4 +44,4 @@ jobs:
         id: deploy-serverless-to-aws
         run: |
           echo "Deploying to STAGE=$STAGE"
-          yarn sls deploy --verbose --stage ${{ env.STAGE }}
+          npx serverless deploy --verbose --stage ${{ env.STAGE }}
