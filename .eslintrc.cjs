@@ -34,6 +34,7 @@ module.exports = {
     '@typescript-eslint/no-explicit-any': 'off',
     '@typescript-eslint/no-empty-function': 'off',
     '@typescript-eslint/no-unused-vars': 'off',
+    '@typescript-eslint/no-empty-function': 'off',
 
     //https://typescript-eslint.io/rules/naming-convention/
     '@typescript-eslint/naming-convention': [
@@ -45,24 +46,27 @@ module.exports = {
         trailingUnderscore: 'allow',
       },
       {
-        selector: 'variableLike',
+        selector: [
+          'variableLike',
+          'classProperty',
+          'method',
+          'property',
+          'parameter',
+          'parameterProperty',
+        ],
         format: ['snake_case', 'UPPER_CASE'],
         leadingUnderscore: 'allow',
         trailingUnderscore: 'allow',
       },
       {
-        selector: 'method',
-        format: ['snake_case'],
+        selector: ['typeLike', 'enumMember'],
+        format: ['PascalCase'],
+      },
+      {
+        selector: ['objectLiteralProperty', 'typeProperty'],
+        format: ['snake_case', 'camelCase'],
         leadingUnderscore: 'allow',
         trailingUnderscore: 'allow',
-      },
-      {
-        selector: 'typeLike',
-        format: ['PascalCase'],
-      },
-      {
-        selector: 'enumMember',
-        format: ['PascalCase'],
       },
     ],
   },
