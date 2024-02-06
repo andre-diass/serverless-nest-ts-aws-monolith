@@ -11,7 +11,7 @@ module.exports = {
 
     // https://github.com/gajus/eslint-plugin-canonical
     'canonical',
-    'prettier'
+    'prettier',
   ],
   extends: [
     'plugin:@typescript-eslint/recommended',
@@ -33,10 +33,11 @@ module.exports = {
     '@typescript-eslint/explicit-module-boundary-types': 'off',
     '@typescript-eslint/no-explicit-any': 'off',
     '@typescript-eslint/no-empty-function': 'off',
+    '@typescript-eslint/no-unused-vars': 'off',
 
     //https://typescript-eslint.io/rules/naming-convention/
-    "@typescript-eslint/naming-convention": [
-      "error",
+    '@typescript-eslint/naming-convention': [
+      'error',
       {
         selector: 'default',
         format: ['camelCase'],
@@ -62,7 +63,7 @@ module.exports = {
       {
         selector: 'enumMember',
         format: ['PascalCase'],
-      }
-    ]
+      },
+    ],
   },
 };
