@@ -41,9 +41,9 @@ export async function open_api_doc(stage: string): Promise<OpenAPIObject> {
   const app = await init_app();
   const config = new DocumentBuilder()
     .setContact(
-      'Murilo Gonçalves',
-      'https://www.github.com/MuriloGon',
-      'murilogoncalvesdev@gmail.com',
+      'André Dias',
+      'https://github.com/andre-diass',
+      'adsf@poli.com',
     )
     .addServer('/' + stage + '/api')
     .addApiKey({ type: 'apiKey', name: 'x-api-key' }, 'x-api-key')
