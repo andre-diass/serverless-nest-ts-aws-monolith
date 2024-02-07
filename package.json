@@ -57,8 +57,9 @@
     "@nestjs/swagger": "^7.1.12",
     "@vendia/serverless-express": "^4.10.4",
     "aws-lambda": "^1.0.7",
+    "mongodb": "^6.3.0",
     "reflect-metadata": "^0.1.13",
     "rxjs": "^7.8.1",
-    "zod": "^3.21.4"
+    "zod": "^3.22.4"
   }
 }
