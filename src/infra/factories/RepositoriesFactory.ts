@@ -1,4 +1,4 @@
-import { ProductWriteRepo } from './repositories/ProductRepositoryDB';
+import { ProductWriteRepo } from '../repositories/ProductRepositoryDB';
 
 export class RepositoriesFactory {
   async user_repository() {
