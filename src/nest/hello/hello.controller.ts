@@ -5,7 +5,6 @@ import {
   ApiSecurity,
   ApiTags,
 } from '@nestjs/swagger';
-import { CreateHello, ResponseDto } from '../dtos/Hello';
 import { AuthGuard } from '../auth/auth.guard';
 
 @ApiSecurity('x-api-key')
@@ -15,12 +14,8 @@ import { AuthGuard } from '../auth/auth.guard';
 export class HelloController {
   @Get()
   @UseGuards(AuthGuard) //RolesGuard class (instead of an instance), leaving responsibility for instantiation to the framework and enabling dependency injection
-  @ApiOkResponse({ type: ResponseDto })
+  @ApiOkResponse({})
   public get_user() {
-    const user = new CreateHello();
-    user.message = 'Hello world';
-    user.quantity = 500;
-
-    return user;
+    return 'teste';
   }
 }

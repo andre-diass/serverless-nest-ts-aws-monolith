@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import { Product } from '../../domain/product/Product';
+import { Product } from '../../../domain/product/Product';
 import { Command } from '../../Command';
 
 const input_schema = z.object({

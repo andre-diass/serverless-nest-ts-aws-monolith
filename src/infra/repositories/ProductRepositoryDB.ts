@@ -1,5 +1,5 @@
 import { ObjectId } from 'mongodb';
-import { Product } from '../../application/domain/product/Product';
+import { Product } from '../../domain/product/Product';
 import { ProductWriteRepository } from '../../application/repositories/ProductRepository';
 import { ProductRaw } from '../database/schemas/product';
 import { DbMap } from './interfaces';

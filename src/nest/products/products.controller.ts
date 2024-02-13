@@ -1,11 +1,11 @@
-import { Body, Controller, Get, HttpCode } from '@nestjs/common';
+import { Body, Controller, Get, HttpCode, Post } from '@nestjs/common';
 import { CreateProduct } from '../../application/usecases/product/CreateProduct';
 import { RepositoriesFactory } from '../../infra/factories/RepositoriesFactory';
 import { catchError } from 'rxjs';
 
 @Controller('products')
 export class ProductsController {
-  @Get()
+  @Post()
   @HttpCode(200)
   public get_user(@Body() body: any) {
     const create_product = new CreateProduct(new RepositoriesFactory());
@@ -16,6 +16,6 @@ export class ProductsController {
       price: body.price,
     });
 
-    return 'product created';
+    return product;
   }
 }
