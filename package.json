@@ -7,8 +7,8 @@
     "dev:lint": "eslint --ext .ts",
     "dev:test": "echo \"Error: no test specified\" && exit 1",
     "dev:types": "tsc --noEmit",
-    "nest:dev": "nest start --watch -e \"node -r dotenv/config\"",
-    "sls:dev": "sls offline --stage lcl",
+    "dev": "nest start --watch -e \"node -r dotenv/config\"",
+    "dev:sls": "sls offline --stage lcl",
     "sls:package": "sls package --stage dev"
   },
   "author": "",
