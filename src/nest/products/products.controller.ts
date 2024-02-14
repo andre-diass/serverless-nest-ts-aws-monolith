@@ -1,13 +1,20 @@
-import { Body, Controller, Get, HttpCode, Post } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  HttpCode,
+  Param,
+  Post,
+} from '@nestjs/common';
 import { CreateProduct } from '../../application/usecases/product/CreateProduct';
 import { RepositoriesFactory } from '../../infra/factories/RepositoriesFactory';
-import { catchError } from 'rxjs';
+import { GetProduct } from '../../application/usecases/product/GetProduct';
 
 @Controller('products')
 export class ProductsController {
   @Post()
-  @HttpCode(200)
-  public get_user(@Body() body: any) {
+  @HttpCode(201)
+  async create_product(@Body() body: any) {
     const create_product = new CreateProduct(new RepositoriesFactory());
     const product = create_product.execute('authData', {
       name: body.name,
@@ -17,5 +24,13 @@ export class ProductsController {
     });
 
     return product;
+  }
+
+  @Get(':productId')
+  @HttpCode(200)
+  async get_product(@Param('productId') product_id: string) {
+    const get_product = new GetProduct(new RepositoriesFactory());
+    const result = await get_product.execute('autdata', { product_id });
+    return result;
   }
 }

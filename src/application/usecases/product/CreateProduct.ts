@@ -14,7 +14,7 @@ type Input = z.infer<typeof input_schema>;
 type Output = Product;
 
 export class CreateProduct extends Command {
-  async execute(auth_data: any, input: Input): Promise<any> {
+  async execute(auth_data: any, input: Input): Promise<Output> {
     const { name, description, price, category } =
       await input_schema.parseAsync(input);
     const new_product = Product.new(
