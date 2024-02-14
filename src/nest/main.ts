@@ -6,9 +6,11 @@ import type { OpenAPIObject } from '@nestjs/swagger';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import type { Handler } from 'aws-lambda';
 import type { INestApplication } from '@nestjs/common';
+import { HttpExceptionFilter } from './exception/http-exception.filter';
 
 export async function init_app(): Promise<INestApplication> {
   const app = await NestFactory.create(AppModule, new ExpressAdapter());
+  app.useGlobalFilters(new HttpExceptionFilter());
 
   return app;
 }
