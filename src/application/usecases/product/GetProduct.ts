@@ -11,7 +11,7 @@ type Output = Product | null;
 export class GetProduct extends Command {
   async execute(auth_data: string, input: Input): Promise<Output> {
     const { product_id } = await input_schema.parseAsync(input);
-    const { write } = await this.repositories_factory.product_repository();
+    const { write } = this.repositories_factory.product_repository();
     const product = await write.restore(product_id);
     return product;
   }

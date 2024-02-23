@@ -24,7 +24,7 @@ export class CreateProduct extends Command {
       category,
       name,
     );
-    const { write } = await this.repositories_factory.product_repository();
+    const { write } = this.repositories_factory.product_repository();
     await write.save(new_product);
     return new_product;
   }
