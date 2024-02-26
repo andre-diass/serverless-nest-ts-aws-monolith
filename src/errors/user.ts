@@ -11,3 +11,9 @@ export class UserNotFound extends NotFoundError {
     super('Users:NotFound', 'User not found', context);
   }
 }
+
+export class Unauthorized extends NotFoundError {
+  constructor(context?: string) {
+    super('Authentication:ErrorOnToken', 'Token error', context);
+  }
+}
