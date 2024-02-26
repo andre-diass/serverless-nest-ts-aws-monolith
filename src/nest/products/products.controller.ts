@@ -29,9 +29,8 @@ export class ProductsController {
   @Get(':productId')
   @HttpCode(200)
   async get_product(@Param('productId') product_id: string) {
-    throw new Error('teste direto do get');
-    // const get_product = new GetProduct(new RepositoriesFactory());
-    // const result = await get_product.execute('autdata', { product_id });
-    // return result;
+    const get_product = new GetProduct(new RepositoriesFactory());
+    const result = await get_product.execute('authdata', { product_id });
+    return result;
   }
 }

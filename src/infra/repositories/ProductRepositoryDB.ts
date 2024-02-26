@@ -1,6 +1,9 @@
 import { ObjectId } from 'mongodb';
 import { Product } from '../../domain/product/Product';
-import { ProductWriteRepository } from '../../application/repositories/ProductRepository';
+import {
+  ProductReadRepository,
+  ProductWriteRepository,
+} from '../../application/repositories/ProductRepository';
 import { ProductRaw } from '../database/schemas/product';
 import { DbMap } from './interfaces';
 import { MongodbCollectionFactory } from '../factories/MongodbCollectionFactory';
@@ -41,6 +44,9 @@ export class ProductWriteRepo implements ProductWriteRepository {
       { upsert: true },
     );
   }
+}
+
+export class ProductReadRepo implements ProductReadRepository {
   async restore(product_id: string): Promise<Product | null> {
     const products_col =
       await MongodbCollectionFactory.products_collection();
