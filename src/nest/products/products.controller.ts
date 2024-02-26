@@ -5,16 +5,24 @@ import {
   HttpCode,
   Param,
   Post,
+  UseGuards,
 } from '@nestjs/common';
 import { CreateProduct } from '../../application/usecases/product/CreateProduct';
 import { RepositoriesFactory } from '../../infra/factories/RepositoriesFactory';
 import { GetProduct } from '../../application/usecases/product/GetProduct';
+import { ApiHeader, ApiSecurity } from '@nestjs/swagger';
+import { AuthGuard } from '../auth/auth.guard';
+import { Auth, AuthPayload } from '../auth/auth.decorator';
 
 @Controller('products')
+@ApiHeader({ name: 'x-api-key' })
+@UseGuards(AuthGuard)
 export class ProductsController {
   @Post()
   @HttpCode(201)
-  async create_product(@Body() body: any) {
+  async create_product(@Auth() auth: AuthPayload, @Body() body: any) {
+    console.log(auth);
+
     const create_product = new CreateProduct(new RepositoriesFactory());
     const product = create_product.execute('authData', {
       name: body.name,
