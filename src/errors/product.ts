@@ -11,3 +11,9 @@ export class ProductAlreadyRegistered extends DomainError {
     super('Product:AlreadyRegistered', 'Produto já cadastrado', context);
   }
 }
+
+export class UserDoestNotOwnProduct extends DomainError {
+  constructor(context?: string) {
+    super('Product:InvalidUser', 'Usuário inválido', context);
+  }
+}

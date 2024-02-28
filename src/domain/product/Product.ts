@@ -1,3 +1,4 @@
+import { AuthPayload } from '../../nest/auth/auth.decorator';
 import { OwnedData } from '../contracts';
 import { ObjectId } from 'mongodb';
 
@@ -11,9 +12,11 @@ export class Product implements OwnedData {
     public category: string,
     public created_at: Date,
   ) {}
-
+  owns_data(auth_data: AuthPayload) {
+    return auth_data.id === this.user_id;
+  }
   static new(
-    user: any,
+    user: AuthPayload,
     description: string,
     price: number,
     category: string,
