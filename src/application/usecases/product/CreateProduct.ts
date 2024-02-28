@@ -1,12 +1,12 @@
 import { z } from 'zod';
 import { Product } from '../../../domain/product/Product';
 import { Command } from '../../Command';
+import { AuthPayload } from '../../../nest/auth/auth.decorator';
 
 const input_schema = z.object({
   name: z.string().min(1),
   description: z.string().min(1),
   price: z.number().min(0),
-  //   userId: z.string(),
   category: z.string().min(1),
 });
 
@@ -14,11 +14,11 @@ type Input = z.infer<typeof input_schema>;
 type Output = Product;
 
 export class CreateProduct extends Command {
-  async execute(auth_data: any, input: Input): Promise<Output> {
+  async execute(auth_data: AuthPayload, input: Input): Promise<Output> {
     const { name, description, price, category } =
       await input_schema.parseAsync(input);
     const new_product = Product.new(
-      'user',
+      auth_data,
       description,
       price,
       category,
