@@ -7,6 +7,7 @@ import {
 import { ProductRaw } from '../database/schemas/product';
 import { DbMap } from './interfaces';
 import { MongodbCollectionFactory } from '../factories/MongodbCollectionFactory';
+import { AuthPayload } from '../../nest/auth/auth.decorator';
 
 const db_map: DbMap<ProductRaw, Product> = {
   app_to_db(product: Product): ProductRaw {
@@ -57,5 +58,20 @@ export class ProductReadRepo implements ProductReadRepository {
     if (product_raw === null) return null;
     const product = db_map.db_to_app(product_raw);
     return product;
+  }
+  async is_product_unique(
+    auth: AuthPayload,
+    product: Product,
+  ): Promise<boolean> {
+    console.log('teste');
+
+    const product_col =
+      await MongodbCollectionFactory.products_collection();
+
+    const result = await product_col.findOne({
+      user_id: new ObjectId(auth.id),
+      name: product.name,
+    });
+    return result === null;
   }
 }
