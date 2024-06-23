@@ -23,6 +23,7 @@ export class ProductsController {
   async create_product(@Auth() auth: AuthPayload, @Body() payload: any) {
     const create_product = new CreateProduct(new RepositoriesFactory());
     console.log(payload);
+    console.log('test deploy');
 
     const product = create_product.execute(auth, { payload });
     return product;
