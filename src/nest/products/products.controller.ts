@@ -15,17 +15,21 @@ import { RepositoriesFactory } from '../../infra/factories/RepositoriesFactory';
 import { GetProduct } from '../../application/usecases/product/GetProduct';
 
 @Controller('products')
-@ApiHeader({ name: 'x-api-key' })
-@UseGuards(AuthGuard)
+// @ApiHeader({ name: 'x-api-key' })
+// @UseGuards(AuthGuard)
 export class ProductsController {
   @Post()
   @HttpCode(201)
-  async create_product(@Auth() auth: AuthPayload, @Body() payload: any) {
+  async create_product(@Body() payload: any) {
     const create_product = new CreateProduct(new RepositoriesFactory());
     console.log(payload);
-    console.log('test deploy');
 
-    const product = create_product.execute(auth, { payload });
+    // const product = create_product.execute(auth, { payload });
+    console.log('----------------------------------');
+    console.log('LAMBDA REACHED');
+    console.log('----------------------------------');
+
+    const product = 'LAMBDA REACHED';
     return product;
   }
 

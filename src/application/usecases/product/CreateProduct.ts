@@ -92,26 +92,27 @@ export class CreateProduct extends Command {
   //   return Artisanal.new(input.payload.details.)
   // }
 
-  private async map_details({ payload }: Input) {
-    let product_details: ProductDetailsVariant;
-
-    switch (payload.product_type) {
-      case 'WOOD_PRODUCTS':
-        product_details = await this.map_wood_products(payload);
-        break;
-      // case 'ARTISANAL':
-      //   product_details = this.map_artisanal(input);
-      //   break;
-      default:
-        break;
-    }
-    return product_details;
-  }
+  //   private async map_details({ payload }: Input) {
+  //     let product_details: ProductDetailsVariant;
+  //
+  //     switch (payload.product_type) {
+  //       case 'WOOD_PRODUCTS':
+  //         product_details = await this.map_wood_products(payload);
+  //         break;
+  //       // case 'ARTISANAL':
+  //       //   product_details = this.map_artisanal(input);
+  //       //   break;
+  //       default:
+  //         break;
+  //     }
+  //     return product_details;
+  //   }
 
   async execute(auth_data: AuthPayload, input: Input): Promise<any> {
-    const { payload } = await unified_schema.parseAsync(input);
+    // const { payload } = await unified_schema.parseAsync(input);
+    console.log('tesssss');
 
-    const details = this.map_details(input);
+    // const details = this.map_details(input);
 
     const { write } = this.repositories_factory.product_repository();
   }
