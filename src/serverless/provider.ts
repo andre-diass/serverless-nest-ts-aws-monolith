@@ -14,7 +14,7 @@ const provider: SLSAwsProvider = {
       {
         name: "${opt:stage, 'lcl'}-internal",
         description: 'Api key used for internal services',
-        enabled: true,
+        enabled: false,
       },
     ],
   },

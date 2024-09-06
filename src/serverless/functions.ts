@@ -13,7 +13,7 @@ export const apiEntrypoint: SLSAwsFunction = {
         method: 'ANY',
         path: '/api/{proxy+}',
         cors: true,
-        private: true,
+        private: false,
       },
     },
   ],
