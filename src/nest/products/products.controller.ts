@@ -33,16 +33,14 @@ export class ProductsController {
     return product;
   }
 
-  @Get(':productId')
+  @Get('')
   @HttpCode(200)
-  async get_product(
-    @Auth() auth: AuthPayload,
-    @Param('productId') product_id: string,
-  ) {
-    const get_product = new GetProduct(new RepositoriesFactory());
-    console.log(product_id);
+  async get_product() {
+    console.log('----------------------------------');
+    console.log('LAMBDA REACHED');
+    console.log('----------------------------------');
 
-    const result = await get_product.execute(auth, { product_id });
-    return result;
+    const product = 'LAMBDA REACHED';
+    return product;
   }
 }
