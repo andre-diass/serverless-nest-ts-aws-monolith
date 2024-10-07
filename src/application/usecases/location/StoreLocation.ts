@@ -3,21 +3,21 @@ import { GeoPoint } from '../../../domain/value_objects/GeoPoint';
 import { Command } from '../../Command';
 
 export class StoreLocation extends Command {
-  async execute(paylod: any): Promise<LocationsRecord> {
+  async execute(payload: any): Promise<LocationsRecord> {
     // extract coordinates from payload
     const mocked_coordinates = { lat: 80.0, long: 100 };
-    console.log(paylod);
+    const response_string = Object.keys(payload)[0];
 
-    const coordinates = this.extract_coordinates_from_payload(paylod);
+    console.log(response_string);
+
+    const coordinates =
+      this.extract_coordinates_from_response(response_string);
     console.log(coordinates);
 
     // extract IMEI
     const mocked_imei = 1111111;
 
-    const geo_point = GeoPoint.new(
-      mocked_coordinates.lat,
-      mocked_coordinates.long,
-    );
+    const geo_point = GeoPoint.new(coordinates.lat, coordinates.long);
 
     const locations_record = LocationsRecord.new(geo_point, mocked_imei);
 
@@ -26,15 +26,18 @@ export class StoreLocation extends Command {
     return locations_record;
   }
 
-  extract_coordinates_from_payload(payload: string): {
+  extract_coordinates_from_response(response: string): {
     lat: number;
     long: number;
   } {
-    const payload_str =
-      typeof payload === 'string' ? payload : String(payload);
-    const regex = /CGNSINF: [^,]*,[^,]*,[^,]*,([^,]+),([^,]+)/;
-    const match = payload_str.match(regex);
+    // Remove non-printable characters
+    const clean_response = response.replace(/[^ -~]+/g, '');
 
+    // Define regex to extract latitude and longitude
+    const regex =
+      /CGNSINF:\s*\d+,\d+,\d+\.\d+,\s*(-?\d+\.\d+),\s*(-?\d+\.\d+)/;
+
+    const match = clean_response.match(regex);
     if (match && match.length >= 3) {
       const lat = parseFloat(match[1]);
       const long = parseFloat(match[2]);
