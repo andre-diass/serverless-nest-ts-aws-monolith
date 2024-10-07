@@ -1,7 +1,4 @@
-import {
-  ProductReadRepo,
-  ProductWriteRepo,
-} from '../repositories/ProductRepositoryDB';
+import { LocationsWriteRepo } from '../repositories/LocationsRepositoryDB';
 import { UserReadRepo } from '../repositories/UserRepositoryDB';
 
 export class RepositoriesFactory {
@@ -9,10 +6,9 @@ export class RepositoriesFactory {
     return { read: new UserReadRepo() };
   }
 
-  product_repository() {
+  locations_repository() {
     return {
-      write: new ProductWriteRepo(),
-      read: new ProductReadRepo(),
+      write: new LocationsWriteRepo(),
     };
   }
 }

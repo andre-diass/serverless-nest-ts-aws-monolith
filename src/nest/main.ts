@@ -19,8 +19,8 @@ export async function init_app(): Promise<INestApplication> {
 function use_swagger(route: string, app: INestApplication) {
   const config = new DocumentBuilder()
     .setContact(
-      'Murilo Gonçalves',
-      'https://www.github.com/MuriloGon',
+      'André Dias',
+      'https://www.github.com/andre-diass',
       'murilogoncalvesdev@gmail.com',
     )
     .setTitle('Serverless + Ts + Nest Api')
