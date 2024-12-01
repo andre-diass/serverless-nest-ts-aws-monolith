@@ -46,4 +46,21 @@ export class LocationsWriteRepo implements LocationsWriteRepository {
     const locations_record = db_map.db_to_app(locations_raw);
     return locations_record;
   }
+
+  async find_location_by_id_and_reference_date(
+    imei: number,
+    reference_date: string,
+  ) {
+    const locations_col =
+      await MongodbCollectionFactory.locations_collection();
+
+    const locations_raw = await locations_col.findOne({
+      imei: imei,
+      reference_date: reference_date,
+    });
+
+    if (locations_raw === null) return null;
+    const locations_record = db_map.db_to_app(locations_raw);
+    return locations_record;
+  }
 }

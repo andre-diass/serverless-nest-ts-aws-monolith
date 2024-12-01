@@ -1,8 +1,8 @@
 import { DomainError, NotFoundError } from './base';
 
-export class ProductNotFound extends NotFoundError {
+export class LocationsRecordNotFound extends NotFoundError {
   constructor(context?: string) {
-    super('Product:NotFound', 'Product not found', context);
+    super('Locations:NotFound', 'Locations not found', context);
   }
 }
 

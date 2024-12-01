@@ -1,6 +1,15 @@
-import { Body, Controller, HttpCode, Post } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  HttpCode,
+  Param,
+  Post,
+  Query,
+} from '@nestjs/common';
 import { StoreLocation } from '../../application/usecases/location/StoreLocation';
 import { RepositoriesFactory } from '../../infra/factories/RepositoriesFactory';
+import { GetLocation } from '../../application/usecases/location/GetLocation';
 
 @Controller('location')
 // @ApiHeader({ name: 'x-api-key' })
@@ -13,5 +22,19 @@ export class LocationController {
 
     const response = store_location.execute(payload);
     return response;
+  }
+
+  @Get()
+  @HttpCode(200)
+  async get_location(
+    @Query('imei') imei: number,
+    @Query('reference_date') reference_date: string,
+  ) {
+    const get_location = new GetLocation(new RepositoriesFactory());
+    const locations = await get_location.execute({
+      imei,
+      reference_date,
+    });
+    return locations;
   }
 }
