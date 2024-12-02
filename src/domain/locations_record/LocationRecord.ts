@@ -13,6 +13,7 @@ export class LocationsRecord {
   // }
   add_location(geolocation: GeoPoint) {
     this.geolocations.push(geolocation);
+    return this;
   }
 
   static new(geolocation: GeoPoint, IMEI: number) {
