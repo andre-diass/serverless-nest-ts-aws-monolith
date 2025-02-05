@@ -37,4 +37,10 @@ export class LocationController {
     });
     return locations;
   }
+
+  @Get('/ping')
+  @HttpCode(200)
+  async ping() {
+    return 'pong';
+  }
 }
