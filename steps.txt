@@ -1,4 +1,3 @@
-- generate image tag on a job and do the output thing
 - for the second job, run only when the first one completes, build docker image with that tag and push to gcp artifact registry
 - update image tag on my repo
 
