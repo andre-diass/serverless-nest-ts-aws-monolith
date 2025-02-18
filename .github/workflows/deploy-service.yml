@@ -1,47 +1,55 @@
-name: Deploy to AWS Serverless Framework Project
+name: Build and Deploy
 
 on:
   push:
     branches:
-      - development
-      - main
+      - test-pipeline # Change if needed
 
 jobs:
-  deploy:
-    name: Deploy
+  generate-image-tag:
     runs-on: ubuntu-latest
-
+    outputs:
+      image_tag: ${{ steps.generate-image-tag.outputs.image_tag }}
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
-
-      - name: Configure AWS credentials
-        uses: aws-actions/configure-aws-credentials@v1
+        uses: actions/checkout@v4
         with:
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: ${{ secrets.AWS_REGION }}
+          fetch-depth: 0 # Needed for git describe to work properly
 
-      # - name: Inject NPM_TOKEN to .npmrc
-      #   run: |
-      #     echo "//npm.pkg.github.com/:_authToken=${{ secrets.NPM_TOKEN }}" >> ./.npmrc
+      - name: Install Task
+        uses: arduino/setup-task@v2
+        with:
+          version: 3.x
 
-      - name: Install Depedencies
-        id: install-deps
-        run: npm install
-
-      - name: Set STAGE variable to dev or prd
+      - name: Check & Increment Tag
+        id: versioning
         run: |
-          if [ ${{ github.ref }} = 'refs/heads/development' ]
-          then
-            echo "STAGE=dev" >> $GITHUB_ENV
-          elif [ ${{ github.ref }} = 'refs/heads/main' ]
-          then
-            echo "STAGE=prd" >> $GITHUB_ENV
+          # Fetch all tags
+          git fetch --tags
+
+          # Get the latest semver tag (sorted by version)
+          latest_tag=$(git tag -l --sort=-v:refname | grep -E "^[0-9]+\.[0-9]+\.[0-9]+$" | head -n 1)
+
+          # If no tag exists, start with 1.0.0
+          if [[ -z "$latest_tag" ]]; then
+            new_tag="1.0.0"
+          else
+            # Extract major, minor, and patch numbers
+            IFS='.' read -r major minor patch <<< "$latest_tag"
+            new_tag="$major.$minor.$((patch + 1))"
           fi
 
-      - name: Deploy Serverless App to AWS
-        id: deploy-serverless-to-aws
+          # Create and push new tag
+          git tag "$new_tag"
+          git push origin "$new_tag"
+
+          echo "New tag created: $new_tag"
+          echo "new_tag=$new_tag" >> "$GITHUB_ENV"
+
+      - name: Generate Image Tag
+        id: generate-image-tag
+        working-directory: 14-cicd/github-actions
         run: |
-          echo "Deploying to STAGE=$STAGE"
-          npx serverless deploy --verbose --stage ${{ env.STAGE }}
+          image_tag=${{ env.new_tag }}
+          echo "Generated Image Tag: $image_tag"
+          echo "image_tag=$image_tag" >> "$GITHUB_OUTPUT"
