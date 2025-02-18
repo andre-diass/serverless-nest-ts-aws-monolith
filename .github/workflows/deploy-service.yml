@@ -5,6 +5,9 @@ on:
     branches:
       - test-pipeline # Change if needed
 
+permissions:
+  contents: write # Allows pushing tags
+
 jobs:
   generate-image-tag:
     runs-on: ubuntu-latest
@@ -23,7 +26,13 @@ jobs:
 
       - name: Check & Increment Tag
         id: versioning
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # Use GitHub token for authentication
         run: |
+          # Configure Git with GitHub Actions token
+          git config --global user.email "github-actions@github.com"
+          git config --global user.name "github-actions[bot]"
+
           # Fetch all tags
           git fetch --tags
 
