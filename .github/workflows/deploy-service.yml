@@ -86,5 +86,5 @@ jobs:
         run: |
           IMAGE_NAME=southamerica-east1-docker.pkg.dev/angular-vector-448122-q6/pfc-tracking-system/${{ github.event.repository.name }}
           TAG=${IMAGE_TAG}
-          docker build -t $IMAGE_NAME:$TAG .
+          docker build -t $IMAGE_NAME:$TAG --target dev .
           docker push $IMAGE_NAME:$TAG
