@@ -57,7 +57,6 @@ jobs:
 
       - name: Generate Image Tag
         id: generate-image-tag
-        working-directory: 14-cicd/github-actions
         run: |
           image_tag=${{ env.new_tag }}
           echo "Generated Image Tag: $image_tag"
