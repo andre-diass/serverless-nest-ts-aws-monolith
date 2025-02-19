@@ -97,9 +97,9 @@ jobs:
         run: |
           git clone https://github.com/andre-diass/kubernetes-devbox-environment.git
           cd kubernetes-devbox-environment/04-deploy-to-multiple-environments/services/api-node/config
-          sed -i 's/version: .*/version:${IMAGE_TAG}/g' dev.yaml
+          sed -i 's/version: .*/version:$IMAGE_TAG/g' dev.yaml
           git config --global user.email "andrediassantoss@hotmail.com"
           git config --global user.name "andre-diass"
           git add .
-          git commit -m "Update image for ${{ github.event.repository.name }} to ${IMAGE_TAG}"
+          git commit -m "Update image for ${{ github.event.repository.name }} to $IMAGE_TAG"
           git push https://x-access-token:${{ secrets.GH_PAT }}@github.com/andre-diass/kubernetes-devbox-environment.git main
