@@ -97,7 +97,7 @@ jobs:
         run: |
           git clone https://github.com/andre-diass/kubernetes-devbox-environment.git
           ls -R kubernetes-devbox-environment
-          cd 04-deploy-to-multiple-environments/services/api-node/config
+          kubernetes-devbox-environment/04-deploy-to-multiple-environments/services/api-node/config
           sed -i 's/version: .*/version:${IMAGE_TAG}/g' dev.yaml
           git config --global user.email "pipeline@githubactions.com"
           git config --global user.name "pipeline"
