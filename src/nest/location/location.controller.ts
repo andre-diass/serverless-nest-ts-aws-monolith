@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/naming-convention */
 import {
   Body,
   Controller,
@@ -42,5 +43,47 @@ export class LocationController {
   @HttpCode(200)
   async ping() {
     return 'pong';
+  }
+  /*
+ Simulates CPU and RAM consumption
+  - It generates a large dataset (simulating a DB query).
+  
+  - It filters the dataset using an inefficient algorithm (simulating complex business logic).
+  
+  - It parses data into a new format (simulating response transformation).
+*/
+  @Get('/stress-test')
+  @HttpCode(200)
+  async stressTest() {
+    console.log('Starting stress test');
+
+    // Simulating a large dataset (like a DB query result)
+    const largeDataset = Array.from({ length: 50000 }, (_, i) => ({
+      id: i,
+      name: `Device_${i}`,
+      value: Math.random() * 1000,
+    }));
+
+    // Simulating a complex search operation (inefficient filtering)
+    const searchValue = Math.random() * 1000;
+    const filteredData = largeDataset.filter((item) =>
+      item.value.toFixed(2).includes(searchValue.toFixed(2).slice(0, 2)),
+    );
+
+    // Simulating CPU usage with an expensive operation
+    const sortedData = filteredData.sort((a, b) => a.value - b.value);
+
+    // Simulating parsing/transformation
+    const transformedData = sortedData.map((item) => ({
+      device: item.name,
+      measurement: item.value.toFixed(2),
+    }));
+
+    console.log('Stress test completed');
+
+    return {
+      count: transformedData.length,
+      results: transformedData.slice(0, 10), // Return only a subset to avoid excessive response size
+    };
   }
 }

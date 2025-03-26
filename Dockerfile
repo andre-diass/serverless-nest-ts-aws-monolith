@@ -11,10 +11,10 @@ RUN npm install --frozen-lockfile
 COPY . .
 CMD ["npm", "run", "dev:nest"]
 
-FROM base AS prod
-RUN npm install --frozen-lockfile --production
-COPY . .
-RUN npm install -g @nestjs/cli
-RUN npm run build
-EXPOSE 3000
-CMD ["npm", "run", "start:prod"]
+# FROM base AS prod
+# RUN npm install --frozen-lockfile --production
+# COPY . .
+# RUN npm install -g @nestjs/cli
+# RUN npm run build
+# EXPOSE 3000
+# CMD ["npm", "run", "start:prod"]
