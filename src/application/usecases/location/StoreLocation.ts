@@ -4,7 +4,7 @@ import { Command } from '../../Command';
 
 export class StoreLocation extends Command {
   async execute(payload: any): Promise<LocationsRecord> {
-    let locations_record: LocationsRecord;
+    // let locations_record: LocationsRecord;
     const mocked_imei = 869951036930547;
     const response_string = Object.keys(payload)[0];
 
@@ -20,18 +20,18 @@ export class StoreLocation extends Command {
 
     const reference_date = new Date().toLocaleDateString();
 
-    const retrivied_locations_record =
-      await write.find_location_by_id_and_reference_date(
-        mocked_imei,
-        reference_date,
-      );
+    // const retrivied_locations_record =
+    //   await write.find_location_by_id_and_reference_date(
+    //     mocked_imei,
+    //     reference_date,
+    //   );
 
-    if (retrivied_locations_record === null) {
-      locations_record = LocationsRecord.new(geo_point, mocked_imei);
-    } else {
-      locations_record =
-        retrivied_locations_record.add_location(geo_point);
-    }
+    // if (retrivied_locations_record === null) {
+    const locations_record = LocationsRecord.new(geo_point, mocked_imei);
+    // } else {
+    //   locations_record =
+    //     retrivied_locations_record.add_location(geo_point);
+    // }
 
     write.save(locations_record);
     return locations_record;
